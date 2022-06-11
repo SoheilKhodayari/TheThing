@@ -1,0 +1,29 @@
+# dependency directories
+node_modules
+jspm_packages
+
+# experiments data
+data
+data/.gitkeep
+
+# python
+TODO.md
+*.pyc
+__pycache__
+
+# neo4j
+docker/neo4j/volume/*
+!docker/neo4j/volume/.gitkeep
+
+# public suffix list cache
+input/tldcache/*
+!input/tldcache/.gitkeep
+
+logs/*
+!logs/.gitkeep
+
+
+browser
+
+
+scripts/outputs/*
