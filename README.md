@@ -34,14 +34,15 @@ TheThing has a website available at [https://domclob.xyz](https://domclob.xyz).
 
 ## Table of Contents
 
-- [DOM Clobbering](#dom-clobbering)
-- [Overview of TheThing](#overview)
+- [DOM Clobbering](#-dom-clobbering)
+	- Techniques [https://github.com/SoheilKhodayari/TheThing/tree/master/docs/dom-clobbering/dom-clobbering.md]
+- [Overview of TheThing](#-overview)
 	- [Crawler](https://github.com/SoheilKhodayari/TheThing/tree/master/crawler)
 	- [Static Analysis](https://github.com/SoheilKhodayari/TheThing/tree/master/analyses/domclobbering)
 	- [Dynamic Analysis](https://github.com/SoheilKhodayari/TheThing/tree/master/dynamic)
-- [Installation](#installation)
-- [Running](#running)
-- [Further Documentation](#documentation)
+- [Installation](#-installation)
+- [Running](#-running)
+- [Further Documentation](#-documentation)
 	- [Building Blocks](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/thething.md)
 	- [Crawling](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/crawling/crawlers.md)
 	- [Static Analysis](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/thething.md#static-analyzer)
@@ -51,8 +52,8 @@ TheThing has a website available at [https://domclob.xyz](https://domclob.xyz).
 	- [Property Graph Querying](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/hpg/hpg-querying.md)
 	- [Neo4j Docker](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/thething/neo4j/neo4j-docker.md)
 	- [Dynamic Analysis](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/thething.md#dynamic-analyzer)
-- [Contribution and Code of Conduct](#contribution-and-code-of-conduct)
-- [Academic Publication](#academic-publication)
+- [Contribution and Code of Conduct](#-contribution-and-code-of-conduct)
+- [Academic Publication](#-academic-publication)
 
 </details>
 
