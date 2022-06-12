@@ -35,7 +35,7 @@ TheThing has a website available at [https://domclob.xyz](https://domclob.xyz).
 ## Table of Contents
 
 - [DOM Clobbering](#-dom-clobbering)
-	- Techniques [https://github.com/SoheilKhodayari/TheThing/tree/master/docs/dom-clobbering/dom-clobbering.md]
+	- [Techniques](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/dom-clobbering/dom-clobbering.md)
 - [Overview of TheThing](#-overview)
 	- [Crawler](https://github.com/SoheilKhodayari/TheThing/tree/master/crawler)
 	- [Static Analysis](https://github.com/SoheilKhodayari/TheThing/tree/master/analyses/domclobbering)
