@@ -42,18 +42,39 @@ function DOMClobberingPayloadGenerator() {
  */
 DOMClobberingPayloadGenerator.prototype.create_dom_clobbering_html_payload = function (statement){
 
-	/*
-	at the moment, supports DOMC payloads up to 6 levels, i.e., window.x.y.z.w.value
-	*/
 	let output = {};
 	const taint_value = "TAINT_" + statement.code.replace(/\./g, '_') + '_' + statement.location.start.line + '_' + statement.location.end.line;
+	const code_targets = statement.code.split('.');
+	const clobbering_value = `clobbered:${taint_value}`;
 	output.taint_value = taint_value;
 	output.clobbering_delay = false; // whether script delay is required for the clobbering, e.g., for iframe chains
 
-	const code_variables = statement.code.split('.');
+
+	if(code_targets.length === 0){
+		return output;
+	}
+
+
+	const chainIframes = function(clobbering_target, n){
+        if (clobbering_target.length - 1 === n){
+            return `<a id='${clobbering_target[n]}'${clobbering_value ? ` href='${clobbering_value}'` : ''}></a>`
+        }
+
+        let html = `<iframe name=${clobbering_target[n]} srcdoc="\n${"  ".repeat(n + 1) + chainIframes(clobbering_target, n + 1) + "\n" + "  ".repeat(n)}"></iframe>`;
+
+        if (n === 1) html = html.replace(/"/g, '&quot;')
+        else if (n > 1) html = html.replace(/"/g, '&quot;').replace(/&/g, "&amp;");
+
+        return html;
+    }
+
+
 	
-	// CASE 1: window.x.y OR x.y
-	if(code_variables[0] !== 'document')
+	
+ 	// ---------------------------
+	// CASE 1: window.X OR X
+	// ---------------------------
+	if(code_targets[0] !== 'document')
 	{
 		/*
 		- up to 2 levels: clobber with HTMLCollections (nodes with same id)
@@ -64,89 +85,121 @@ DOMClobberingPayloadGenerator.prototype.create_dom_clobbering_html_payload = fun
 		- other cases >= three levels : iframe chains
 		*/
 
-		if(code_variables[0] !== 'window')
+		if(code_targets[0] !== 'window')
 		{
 			// add the window object to the beginning to 
-			// handle both the case of `window.x.y` and `x.y`
-			// together in one go, rather than having separate checks
-			code_variables.unshift('window');
+			// handle both the case of `window.x.y` and `x.y` together
+			code_targets.unshift('window');
 		}
-		const code_variables_length = code_variables.length;
+		const code_targets_length = code_targets.length;
 
-		if(code_variables_length === 1){
-			const payload = ""; // cannot clobber window alone;
+		if(code_targets_length === 1){
+			// cannot clobber window alone;
+			let payload = ""; 
 			output.payload = payload;
 		}
-		else if(code_variables_length === 2)
+		else if(code_targets_length === 2)
 		{
 			// CASE 1.1: window.x
-			const payload = `<a id="${code_variables[1]}" href="clobbered:${taint_value}"></a>`;
+			let payload = `<a id="${code_targets[1]}" href="${clobbering_value}"></a>`;
 			output.payload = payload;
 		}
-		else if(code_variables_length === 3)
+		else if(code_targets_length === 3)
 		{
 			// CASE 1.2: window.x.y
-			const payload = `<a id="${code_variables[1]}"></a><a id="${code_variables[1]}" name="${code_variables[2]}" href="clobbered:${taint_value}"></a>`;
+			let payload = `<a id="${code_targets[1]}"></a><a id="${code_targets[1]}" name="${code_targets[2]}" href="${clobbering_value}"></a>`;
 			output.payload = payload;
 		}
-		else if(code_variables_length === 4 && code_variables[3] === 'src')
+		else if(code_targets_length === 4 && code_targets[3] === 'src')
 		{
 			// CASE 1.3: window.x.y.src
-			const payload = `<video id="${code_variables[1]}"></video><video id="${code_variables[1]}" name="${code_variables[2]}" src="${taint_value}"></video>`;
+			let payload = `<video id="${code_targets[1]}"></video><video id="${code_targets[1]}" name="${code_targets[2]}" src="${taint_value}"></video>`;
 			output.payload = payload;			
 		}
-		else if(code_variables_length === 4 && code_variables[3] === 'value')
+		else if(code_targets_length === 4 && code_targets[3] === 'value')
 		{
 			// CASE 1.4: window.x.y.value
-			const payload = `<form id="${code_variables[1]}"><input type="text" id="${code_variables[2]}" value="${taint_value}"/></form>`;
+			let payload = `<form id="${code_targets[1]}"><input type="text" id="${code_targets[2]}" value="${taint_value}"/></form>`;
 			output.payload = payload;			
 		}
-		else if(code_variables_length === 4 && code_variables[3] === 'href')
+		else if(code_targets_length === 4 && code_targets[3] === 'href')
 		{
 			// CASE 1.5: window.x.y.href
-			const payload = `<a id="${code_variables[1]}"></a><a id="${code_variables[1]}" name="${code_variables[2]}" href="clobbered:${taint_value}"></a>`;
+			let payload = `<a id="${code_targets[1]}"></a><a id="${code_targets[1]}" name="${code_targets[2]}" href="${clobbering_value}"></a>`;
 			output.payload = payload;
 		}
-		else if (code_variables_length === 4) 
+		
+		else if (code_targets_length === 4) 
 		{
 			// CASE 1.6: window.x.y.z
-			output.clobbering_delay = true;
-			const last_src_doc = `<a id=${code_variables[code_variables_length-1]} href=clobbered:${taint_value} ></a>`;
-			const payload = `<iframe name="${code_variables[1]}" srcdoc="<iframe name='${code_variables[2]}' srcdoc='${last_src_doc}'></iframe>"></iframe>`;
+			let payload = `<form id="${code_targets[1]}"><form id="${code_targets[1]}" name="${code_targets[2]}"> <input name="${code_targets[3]}" value="${clobbering_value}"/></form>`;
 			output.payload = payload
 		}
-		else if (code_variables_length === 5) 
+		
+		else if (code_targets_length === 5) 
 		{
 			// CASE 1.7: window.x.y.z.w
 			output.clobbering_delay = true;
-			const last_src_doc = `<a id=${code_variables[code_variables_length-2]}></a><a id=${code_variables[code_variables_length-2]} name=${code_variables[code_variables_length-1]} href=clobbered:${taint_value}></a>`;
-			const payload = `<iframe name="${code_variables[1]}" srcdoc="<iframe name='${code_variables[2]}' srcdoc='${last_src_doc}'></iframe>"></iframe>`;
+			let last_src_doc = `<a id=${code_targets[code_targets_length-2]}></a><a id=${code_targets[code_targets_length-2]} name=${code_targets[code_targets_length-1]} href=${clobbering_value}></a>`;
+			let payload = `<iframe name="${code_targets[1]}" srcdoc="<iframe name='${code_targets[2]}' srcdoc='${last_src_doc}'></iframe>"></iframe>`;
 			output.payload = payload
 		}
-		else if (code_variables_length === 6 && code_variables[5] === 'href') 
+		
+		else if (code_targets_length === 6 && code_targets[5] === 'href') 
 		{
 			// CASE 1.8: window.x.y.z.w.href
 			output.clobbering_delay = true;
-			const last_src_doc = `<a id=${code_variables[code_variables_length-2]}></a><a id=${code_variables[code_variables_length-2]} name=${code_variables[code_variables_length-1]} href=clobbered:${taint_value}></a>`;
-			const payload = `<iframe name="${code_variables[1]}" srcdoc="<iframe name='${code_variables[2]}' srcdoc='${last_src_doc}'></iframe>"></iframe>`;
+			let last_src_doc = `<a id=${code_targets[code_targets_length-2]}></a><a id=${code_targets[code_targets_length-2]} name=${code_targets[code_targets_length-1]} href=${clobbering_value}></a>`;
+			let payload = `<iframe name="${code_targets[1]}" srcdoc="<iframe name='${code_targets[2]}' srcdoc='${last_src_doc}'></iframe>"></iframe>`;
 			output.payload = payload
 		}
+		
 		else
 		{
-			// no known method to clobber more than six levels
-			output.payload="";
+			// CASE 1.9: for higher levels, recursively chain iframes to create nested frames of length n
+			let payload= chainIframes(code_targets, 0);
+			output.payload=payload;
 		}
 		
 
-	} // CASE 2: document.x.y
+	} 
+
+	// ---------------------------
+	// CASE 2: document.X 
+	// ---------------------------
 	else
 	{
-		const code_variables_length = code_variables.length;
-		if(code_variables_length === 1){
-			const payload = ""; // cannot clobber document object alone;
+		const code_targets_length = code_targets.length;
+		if(code_targets_length === 1){
+			// cannot clobber document object alone;
+			const payload = ""; 
+			output.payload = payload;
+		}
+
+		else if(code_targets_length === 2){
+			// CASE 2.1: document.x
+			let payload = `<img name="${code_targets[1]}" src="${clobbering_value}"></img>`;
+			output.payload = payload;
+		}
+
+		else if(code_targets_length === 3){
+			// CASE 2.2: document.x.y
+			let payload = `<form name="${code_targets[1]}"><img name="${code_targets[2]}" src="${clobbering_value}"></form>`;
 			output.payload = payload;
 		}
 		
+		else if(code_targets_length === 4){
+			// CASE 2.3: document.x.y.z
+			let payload = `<form id="${code_targets[1]}">\n<form id="${code_targets[1]}" name="${code_targets[2]}">\n <input name="${code_targets[3]}" value="${clobbering_value}">\n</form>`;
+			output.payload = payload;
+		}
+
+		else {
+			// CASE 2.4: higher levels
+			let payload=chainIframes(code_targets, 0);
+			output = output.concat([payload]);
+
+		}
 
 	}
 
@@ -160,25 +213,6 @@ DOMClobberingPayloadGenerator.prototype.create_dom_clobbering_html_payload = fun
 module.exports = {
 	DOMClobberingPayloadGenerator: DOMClobberingPayloadGenerator
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
