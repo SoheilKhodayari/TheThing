@@ -57,16 +57,16 @@ The markups of this group can shadow `document` properties using a single named 
 
 These markups clobber properties `X.y` where `X` can be any of `x`, window.x, and document.x. First, they exploit either the rules R1 or R2 to clobber the base object `X`. 
 
-Then,they use the Form Element rule (R3) to clobber property `y` of object `X`, i.e., the form elements' parent-child relationships where the browser creates a property of the second element for the first element's accessor variable. 
+Then, they use the Form Element rule (R3) to clobber property `y` of object `X`, i.e., the form elements' parent-child relationships where the browser creates a property of the second element for the first element's accessor variable. 
 
 DOM Clobbering code that rely on this technique comprise a `form` tag and a child (e.g., an `input` whose named attributes are set to variables `x` and `y`, respectively. 
 
 
 ### [T4: Nested Window Proxies (R4+R1, R4+R2)](https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element)
 
- These markups use the Iframe `srcdoc` rule (R4) to create nested window proxies that are named with `x` and `y`, respectively. 
+These markups use the Iframe `srcdoc` rule (R4) to create nested window proxies that are named with `x` and `y`, respectively. 
 
- Similarly to the previous group of markups, it uses the rule R1 or R2 to clobber the base object.
+Similarly to the previous group of markups, it uses the rule R1 or R2 to clobber the base object.
 Then, the stacked iframes enable attackers to exploit frame navigation features to clobber object properties like `x.y`.
 
 
