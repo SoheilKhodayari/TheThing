@@ -38,6 +38,14 @@ const DEBUG = true;
 const BROWSER_LOG = false; 	
 
 
+// additional data that the crawler should store 
+const COLLECT_REQUESTS = true;
+const COLLECT_WEB_STORAGE = true;
+const COLLECT_COOKIES = true;
+const COLLECT_DOM_SNAPSHOT = true;
+const COLLECT_SCRIPTS = true;
+
+
 /**
  * ------------------------------------------------
  *  			utility functions
@@ -151,7 +159,7 @@ function directoryExists(url){
  * @param dataDirectory: string of the base directory to store the data for the current website.
  * @return stores the input webpage data and returns the absolute folder name where the data is saved.
 **/
-function savePageData(url, html, scripts, dataDirectory){
+function savePageData(url, html, scripts, cookies, webStorageData, httpRequests, dataDirectory){
 
 
 	DEBUG && console.log("[IO] started saving webpage.")
@@ -167,12 +175,20 @@ function savePageData(url, html, scripts, dataDirectory){
 	// store url in url.out in the webpage-specific directory
 	fs.writeFileSync(pathModule.join(webpageFolder, "url.out"), url);
 
-	fs.writeFileSync(pathModule.join(webpageFolder, "index.html"), '' + html);
-	scripts.forEach((s, i)=> {
-		fs.writeFileSync(pathModule.join(webpageFolder, `${i}.js`), '' + s.source);
-	});
+	COLLECT_DOM_SNAPSHOT && fs.writeFileSync(pathModule.join(webpageFolder, "index.html"), '' + html);
 
-	DEBUG && console.log("[IO] finished saving webpage.")
+	if(COLLECT_SCRIPTS){
+		scripts.forEach((s, i)=> {
+			fs.writeFileSync(pathModule.join(webpageFolder, `${i}.js`), '' + s.source);
+		});
+	}
+
+	COLLECT_COOKIES     & fs.writeFileSync(pathModule.join(webpageFolder, "cookies.json"), JSON.stringify(cookies, null, 4));
+	COLLECT_WEB_STORAGE & fs.writeFileSync(pathModule.join(webpageFolder, "webstorage.json"), JSON.stringify(webStorageData, null, 4));
+	COLLECT_REQUESTS && fs.writeFileSync(pathModule.join(webpageFolder, "requests.json"), JSON.stringify(httpRequests, null, 4));
+
+	DEBUG && console.log("[IO] finished saving webpage.");
+
 	return webpageFolder;
 }
 
@@ -239,6 +255,19 @@ async function crawlWebsite(browser, url, domain, frontier, dataDirectory, debug
 	});
 
 
+	// set the request interception to true and collect the HTTP requests
+	let httpRequests = [];
+	await page.setRequestInterception(true);
+	page.on('request', (request) => {
+
+		let requestUrl = request.url();
+		// filter out data:image urls
+		if (!requestUrl.startsWith('data:image')){
+			httpRequests.push(requestUrl);
+		}
+		request.continue();
+	});
+
 	try{
 		DEBUG && console.log('[pageLoad] loading new URL: ' + url);
 		await page.goto(url, {waitUntil: 'networkidle0'}); // or waitUntil: load
@@ -268,7 +297,33 @@ async function crawlWebsite(browser, url, domain, frontier, dataDirectory, debug
 
 		let html = await page.content();
 		finished = true; // lock scripts for saving
-		const webpageFolder = await savePageData(url, html, scripts, dataDirectory);
+
+
+		// web storage data
+		let webStorageData = await page.evaluate( () => {
+			
+			function getWebStorageData() {
+			    let storage = {};
+			    let keys = Object.keys(window.localStorage);
+			    let i = keys.length;
+			    while ( i-- ) {
+			        storage[keys[i]] = window.localStorage.getItem(keys[i]);
+			    }
+			    return storage;
+			}
+
+			// let webStorageData = window.localStorage;
+			let webStorageData = getWebStorageData();
+			return webStorageData;
+		});
+		DEBUG && console.log("webStorageData", webStorageData);
+
+		// cookies, list of JS objects
+		let cookies = await page.cookies(); 
+
+
+		// save the collected data 
+		const webpageFolder = await savePageData(url, html, scripts, cookies, webStorageData, httpRequests, dataDirectory);
 
 
 		/** 
