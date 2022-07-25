@@ -14,7 +14,7 @@ To start the crawler, do:
 $ node crawler.js --seedurl=https://google.com --maxurls=100 --browser=chrome --headless=true
 ```
 
-Please see [https://github.com/SoheilKhodayari/TheThing/tree/master/docs/crawling/puppeteer-crawler.md] for more information.
+Please see [here](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/crawling/puppeteer-crawler.md) for more information.
 
 
 ## CLI Usage (Selenium)

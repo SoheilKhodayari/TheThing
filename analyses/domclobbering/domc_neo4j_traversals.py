@@ -20,7 +20,7 @@
 
 	Usage:
 	-----------
-	python3 -m hpg_analysis.domclobbering.main
+	> import analyses.domclobbering.domc_neo4j_traversals as DOMCTraversalsModule
 
 """
 
