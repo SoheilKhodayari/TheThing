@@ -29,8 +29,8 @@ import os
 import sys
 import time
 import constants as constantsModule
+import utils.io as IOModule
 from utils.logging import logger
-
 
 import analyses.domclobbering.domc_cypher_queries as DOMCTraversalsModule
 import hpg_neo4j.db_utility as neo4jDatabaseUtilityModule
@@ -89,6 +89,8 @@ def build_and_analyze_hpg(seed_url):
 	container_name = 'neo4j_container_'
 
 
+	# de-compress the hpg 
+	IOModule.decompress_graph(webpage)
 
 	for each_webpage in webapp_pages:
 
@@ -132,6 +134,8 @@ def build_and_analyze_hpg(seed_url):
 			if not connection_success:
 				sys.exit(1)
 
+		# compress the hpg after the model import
+		IOModule.compress_graph(webpage)
 
 		# step3: run the vulnerability detection queries
 		if query:
