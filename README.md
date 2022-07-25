@@ -28,6 +28,8 @@ This project is available as open source under the terms of the `GNU AFFERO GENE
 
 TheThing has a website available at [https://domclob.xyz](https://domclob.xyz). 
 
+**Note:** TheThing uses the static analysis [engine](engine) of [JAW](https://github.com/SoheilKhodayari/JAW) as a git submodule. For best experience, fetch the latest SAST engine from [JAW's repository](https://github.com/SoheilKhodayari/JAW) and place it inside the [engine](engine) folder.
+
 
 <details>
 <summary>📓 <b>Content</b></summary>
