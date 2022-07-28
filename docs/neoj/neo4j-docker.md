@@ -57,7 +57,7 @@ def run_queries(tx):
 
 ## Complete Example
 
-A complete example on how to use JAW with neo4j docker can be found in [analyses/example/example_analysis.py](https://github.com/SoheilKhodayari/TheThing/blob/master/analyses/example/example_analysis.py).
+A complete example on how to use JAW with neo4j docker can be found in [analyses/example/example_analysis.py](https://github.com/SoheilKhodayari/JAW/blob/master/analyses/example/example_analysis.py).
 
 You can run the example analysis from the root directory with:
 ```bash

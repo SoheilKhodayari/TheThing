@@ -12,7 +12,7 @@
 	<a href="https://domclob.xyz">Website</a> |
 	<a href="https://github.com/SoheilKhodayari/TheThing/tree/master/docs">Docs</a> |
 	<a href="https://github.com/SoheilKhodayari/TheThing/tree/master/docs/thething.md">Quick Start</a> |
-	<a href="https://domclob.xyz/wiki">DOM Clobbering</a>
+	<a href="https://domclob.xyz/domc_wiki">DOM Clobbering</a>
 </p>
 
 
@@ -22,13 +22,13 @@
 [![Build Status](https://travis-ci.org/boennemann/badges.svg?branch=master)](https://travis-ci.org/boennemann/badges) [![Node](https://img.shields.io/badge/node%40latest-%3E%3D%206.0.0-brightgreen.svg)](https://img.shields.io/badge/node%40latest-%3E%3D%206.0.0-brightgreen.svg) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![Open Source?Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Find%20DOM%20Clobbering%20vulnerabilities%20with%20TheThing&url=https://github.com/SoheilKhodayari/TheThing)
 
 
-A static-dynamic security analysis tool for [DOM clobbering](https://portswigger.net/web-security/dom-based/dom-clobbering) vulnerabilities based on [JAW](https://soheilkhodayari.github.io/JAW/) and [Iroh](https://github.com/maierfelix/Iroh). TheThing can be used for analyzing the client-side of web applications 
+A static-dynamic security analysis tool for [DOM clobbering](https://portswigger.net/web-security/dom-based/dom-clobbering) vulnerabilities based on [JAW-v1](https://github.com/SoheilKhodayari/JAW/releases/tag/v1.1.5) and [Iroh](https://github.com/maierfelix/Iroh). TheThing can be used for analyzing the client-side of web applications.
+
+**Note:** The source code of TheThing has been merged with [JAW](https://soheilkhodayari.github.io/JAW/), resulting in [JAW-v2](https://github.com/SoheilKhodayari/JAW/releases/tag/v2.0.1). Accordingly, this repository now uses [JAW-v2](https://github.com/SoheilKhodayari/JAW/releases/tag/v2.0.1) as a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 
 This project is available as open source under the terms of the `GNU AFFERO GENERAL PUBLIC LICENSE V3.0`. See [LICENSE](LICENSE) for more information.
 
 TheThing has a website available at [https://domclob.xyz](https://domclob.xyz). 
-
-**Note:** TheThing uses the static analysis [engine](engine) of [JAW](https://github.com/SoheilKhodayari/JAW) as a git submodule. For best experience, fetch the latest SAST engine from [JAW's repository](https://github.com/SoheilKhodayari/JAW) and place it inside the [engine](engine) folder.
 
 
 <details>
@@ -39,9 +39,9 @@ TheThing has a website available at [https://domclob.xyz](https://domclob.xyz).
 - [DOM Clobbering](#-dom-clobbering)
 	- [Techniques](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/dom-clobbering/dom-clobbering.md)
 - [Overview of TheThing](#-overview)
-	- [Crawler](https://github.com/SoheilKhodayari/TheThing/tree/master/crawler)
-	- [Static Analysis](https://github.com/SoheilKhodayari/TheThing/tree/master/analyses/domclobbering)
-	- [Dynamic Analysis](https://github.com/SoheilKhodayari/TheThing/tree/master/dynamic)
+	- [Crawler](https://github.com/SoheilKhodayari/JAW/tree/master/crawler)
+	- [Static Analysis](https://github.com/SoheilKhodayari/JAW/tree/master/analyses/domclobbering)
+	- [Dynamic Analysis](https://github.com/SoheilKhodayari/JAW/tree/master/dynamic)
 - [Installation](#-installation)
 - [Running](#-running)
 - [Further Documentation](#-documentation)
@@ -75,9 +75,9 @@ For more information, See [here](https://domclob.xyz/wiki).
 
 TheThing comprises three building block components: 
 
-- **[Web Crawler](https://github.com/SoheilKhodayari/TheThing/tree/master/crawler):** given a single seed URL of a webapp under test, collects its webpages' resources (e.g., scripts).
-- **[Static Analyzer](https://github.com/SoheilKhodayari/TheThing/tree/master/analyses/domclobbering):** detects DOM Clobbering sources and sinks and potential data flows among them.
-- **[Dynamic Analyzer](https://github.com/SoheilKhodayari/TheThing/tree/master/dynamic):** checks the clobberability of the identified sources, and the data flows. 
+- **[Web Crawler](https://github.com/SoheilKhodayari/JAW/tree/master/crawler):** given a single seed URL of a webapp under test, collects its webpages' resources (e.g., scripts).
+- **[Static Analyzer](https://github.com/SoheilKhodayari/JAW/tree/master/analyses/domclobbering):** detects DOM Clobbering sources and sinks and potential data flows among them.
+- **[Dynamic Analyzer](https://github.com/SoheilKhodayari/JAW/tree/master/dynamic):** checks the clobberability of the identified sources, and the data flows. 
 
 
 The architecture of the TheThing is shown below.
@@ -90,7 +90,28 @@ The architecture of the TheThing is shown below.
 
 ## 🏭 Installation
 
-Get the necessary dependencies via:
+The source code of TheThing has been merged with [JAW](https://soheilkhodayari.github.io/JAW/), resulting in [JAW-v2](https://github.com/SoheilKhodayari/JAW/releases/tag/v2.0.1). As such, this repository now uses [JAW-v2](https://github.com/SoheilKhodayari/JAW/releases/tag/v2.0.1) as a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
+
+
+To clone TheThing and its submodule `JAW-v2.x`, you can do:
+```bash
+$ git clone --recurse-submodules https://github.com/SoheilKhodayari/TheThing
+```
+
+Alternatively, do:
+```bash
+$ git clone https://github.com/SoheilKhodayari/TheThing
+$ cd TheThing
+$ git clone https://github.com/SoheilKhodayari/JAW --branch v2.0.1  
+```
+
+Then, move the JAW's content into the root directory:
+```bash
+$ rm JAW/.git
+$ mv -rf ./JAW/* ./
+```
+
+Finally, get the necessary dependencies via:
 ```bash
 $ ./install.sh
 ```

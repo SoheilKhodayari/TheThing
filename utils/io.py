@@ -25,6 +25,7 @@ import yaml
 import zipfile
 import os
 import shutil
+import constants as constantsModule
 from threading import Timer
 from utils.logging import logger
 
@@ -79,9 +80,11 @@ def run_os_command(cmd, print_stdout=True, timeout=30*60, cwd='default'):
 	return ret
 
 
-def bash_command(cmd, cwd=None, timeout=30*60, capture_output=False):
+def bash_command(cmd, cwd=None, timeout=30*60, capture_output=False, log_command=False):
 	ret = 1
 	try:
+		if log_command:
+			logger.debug('Running command: %s'%cmd)
 		subprocess.run(cmd, cwd=cwd, timeout=timeout, capture_output=capture_output, check=True, shell=True)
 	except subprocess.TimeoutExpired as e:
 		ret = -1
@@ -100,37 +103,6 @@ def unzip(path_to_zip_file, directory_to_extract_to):
 	    zip_ref.extractall(directory_to_extract_to)
 
 
-# def compress_graph(webpage_folder_path):
-
-# 	nodes_file = os.path.join(webpage_folder_path, 'nodes.csv')
-# 	rels_file = os.path.join(webpage_folder_path, 'rels.csv')
-
-# 	if os.path.exists(nodes_file) and os.path.exists(rels_file):
-# 		compression = zipfile.ZIP_DEFLATED
-# 		zip_file = os.path.join(webpage_folder_path,'graph.zip')
-# 		zip_fd = zipfile.ZipFile(zip_file, 'w')
-# 		zip_fd.write(nodes_file, 'nodes.csv', compress_type=compression)
-# 		zip_fd.write(rels_file, 'rels.csv', compress_type=compression)
-		
-# 		### https://docs.python.org/3/library/zipfile.html#zipfile.ZipFile.testzip
-# 		# zip_status = zip_fd.testzip()
-# 		# if zip_status is None:
-# 		# 	print('ZIP CRC header does not match.')
-
-# 		zip_fd.close()
-
-# 		os.remove(nodes_file)
-# 		os.remove(rels_file)
-
-
-# def decompress_graph(webpage_folder_path):
-
-# 	zip_file = os.path.join(webpage_folder_path,'graph.zip')
-# 	if os.path.exists(zip_file):
-# 		unzip(zip_file, webpage_folder_path)
-# 		os.remove(zip_file)
-
-
 def compress_graph(webpage_folder_path, node_file=constantsModule.NODE_INPUT_FILE_NAME, edge_file=constantsModule.RELS_INPUT_FILE_NAME):
 
 	cmd1="pigz %s"%(os.path.join(webpage_folder_path, node_file))
@@ -145,3 +117,5 @@ def decompress_graph(webpage_folder_path, node_file=constantsModule.NODE_INPUT_F
 	cmd2="pigz -d %s"%(os.path.join(webpage_folder_path, edge_file))
 	bash_command(cmd1)
 	bash_command(cmd2)
+
+

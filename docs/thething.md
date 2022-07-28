@@ -2,9 +2,9 @@
 
 TheThing comprises three building block components: 
 
-- **[Web Crawler](https://github.com/SoheilKhodayari/TheThing/tree/master/crawler):** given a single seed URL of a webapp under test, collects its webpages' resources (e.g., scripts).
-- **[Static Analyzer](https://github.com/SoheilKhodayari/TheThing/tree/master/analyses/domclobbering):** detects DOM Clobbering sources and sinks and potential data flows among them.
-- **[Dynamic Analyzer](https://github.com/SoheilKhodayari/TheThing/tree/master/dynamic):** checks the clobberability of the identified sources, and the data flows. 
+- **[Web Crawler](https://github.com/SoheilKhodayari/JAW/tree/master/crawler):** given a single seed URL of a webapp under test, collects its webpages' resources (e.g., scripts).
+- **[Static Analyzer](https://github.com/SoheilKhodayari/JAW/tree/master/analyses/domclobbering):** detects DOM Clobbering sources and sinks and potential data flows among them.
+- **[Dynamic Analyzer](https://github.com/SoheilKhodayari/JAW/tree/master/dynamic):** checks the clobberability of the identified sources, and the data flows. 
 
 
 The architecture of the TheThing is shown below.
@@ -16,7 +16,28 @@ The architecture of the TheThing is shown below.
 
 ## Installation
 
-Get the necessary dependencies via:
+The source code of TheThing has been merged with [JAW](https://soheilkhodayari.github.io/JAW/), resulting in [JAW-v2](https://github.com/SoheilKhodayari/JAW/releases/tag/v2.0.1). This repository uses [JAW-v2](https://github.com/SoheilKhodayari/JAW/releases/tag/v2.0.1) as a [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
+
+
+To clone TheThing and its submodule `JAW-v2.x`, you can do:
+```bash
+$ git clone --recurse-submodules https://github.com/SoheilKhodayari/TheThing
+```
+
+Alternatively, do:
+```bash
+$ git clone https://github.com/SoheilKhodayari/TheThing
+$ cd TheThing
+$ git clone https://github.com/SoheilKhodayari/JAW --branch v2.0.1  
+```
+
+Then, move the JAW's content into the root directory:
+```bash
+$ rm JAW/.git
+$ mv -rf ./JAW/* ./
+```
+
+Finally, get the necessary dependencies via:
 ```bash
 $ ./install.sh
 ```
@@ -103,9 +124,9 @@ $ node --max-old-space-size=4096 $(pwd)/analyses/domclobbering/static_analysis.j
 ```
 
 
-**Source Code.** The source code for the underlying static analysis engine is in the [engine](https://github.com/SoheilKhodayari/TheThing/tree/master/engine) folder, whereas the vulnerability analysis code in [analyses/domclobbering](https://github.com/SoheilKhodayari/TheThing/tree/master/analyses/domclobbering).
+**Source Code.** The source code for the underlying static analysis engine is in the [engine](https://github.com/SoheilKhodayari/JAW/tree/master/engine) folder, whereas the vulnerability analysis code in [analyses/domclobbering](https://github.com/SoheilKhodayari/JAW/tree/master/analyses/domclobbering).
 
-**Tests.** You will find some tests for DOM Clobbering payload generation, and source detection inside the [tests](https://github.com/SoheilKhodayari/TheThing/tree/master/tests) folder.
+**Tests.** You will find some tests for DOM Clobbering payload generation, and source detection inside the [tests](https://github.com/SoheilKhodayari/JAW/tree/master/tests) folder.
 
 
 ### Dynamic Analyzer
@@ -140,9 +161,9 @@ Other CLI params:
 - `--browserstack_access_key`: accesskey for BrowserStack.
 
 
-**Source Code.**  The source code for the dynamic analysis component is in the [dynamic](https://github.com/SoheilKhodayari/TheThing/tree/master/dynamic) folder.
+**Source Code.** The source code for the dynamic analysis component is in the [dynamic](https://github.com/SoheilKhodayari/JAW/tree/master/dynamic) folder.
 
-**Tests.** You will find some tests for forced execution inside the [tests](https://github.com/SoheilKhodayari/TheThing/tree/master/tests/dynamic-analysis) folder.
+**Tests.** You will find some tests for forced execution inside the [tests](https://github.com/SoheilKhodayari/JAW/tree/master/tests/dynamic-analysis) folder.
 
 
 

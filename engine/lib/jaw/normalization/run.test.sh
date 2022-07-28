@@ -1,1 +1,0 @@
-python3 -m hpg_construction.lib.jaw.normalization.normalizer
