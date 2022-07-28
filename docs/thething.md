@@ -31,10 +31,9 @@ $ cd TheThing
 $ git clone https://github.com/SoheilKhodayari/JAW --branch v2.0.1  
 ```
 
-Then, move the JAW's content into the root directory:
+Then, copy the JAW's content into the root directory:
 ```bash
-$ rm JAW/.git
-$ mv -rf ./JAW/* ./
+$ cp -rf ./JAW/* ./
 ```
 
 Finally, get the necessary dependencies via:
