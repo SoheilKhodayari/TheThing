@@ -118,6 +118,10 @@ $ ./install.sh
 This will install the required `npm` and `python` libraries, and the `chromium` driver.
 
 
+**Note:** You can also download the pre-packaged code from the [releases](https://github.com/SoheilKhodayari/TheThing/releases/tag/v1.0.0) section or the [stable](https://github.com/SoheilKhodayari/TheThing/tree/stable) branch.
+
+
+
 ## 🚀 Running
 
 
