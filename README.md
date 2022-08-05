@@ -9,10 +9,10 @@
 </p>
 
 <p align="center">
-	<a href="https://domclob.xyz">Website</a> |
+	<a href="https://soheilkhodayari.github.io/DOMClobbering">Website</a> |
 	<a href="https://github.com/SoheilKhodayari/TheThing/tree/master/docs">Docs</a> |
 	<a href="https://github.com/SoheilKhodayari/TheThing/tree/master/docs/thething.md">Quick Start</a> |
-	<a href="https://domclob.xyz/domc_wiki">DOM Clobbering</a>
+	<a href="https://soheilkhodayari.github.io/DOMClobbering/domc_wiki">DOM Clobbering</a>
 </p>
 
 
@@ -28,7 +28,7 @@ A static-dynamic security analysis tool for [DOM clobbering](https://portswigger
 
 This project is available as open source under the terms of the `GNU AFFERO GENERAL PUBLIC LICENSE V3.0`. See [LICENSE](LICENSE) for more information.
 
-TheThing has a website available at [https://domclob.xyz](https://domclob.xyz). 
+TheThing has a website available at [https://soheilkhodayari.github.io/DOMClobbering](https://soheilkhodayari.github.io/DOMClobbering). 
 
 
 <details>
@@ -68,7 +68,7 @@ TheThing has a website available at [https://domclob.xyz](https://domclob.xyz).
 
 DOM Clobbering originates from a naming collision between JavaScript variables and [named HTML markups](https://html.spec.whatwg.org/multipage/window-object.html#named-access-on-the-window-object), where attackers confuse the web application by injecting HTML elements whose `id` or `name` attribute matches the name of security-sensitive variables, such as variables used for fetching remote content (e.g., script `src`). 
 
-For more information, See [here](https://domclob.xyz/wiki).
+For more information, See [here](https://soheilkhodayari.github.io/DOMClobbering/domc_wiki).
 
 
 ## ➰ Overview 
