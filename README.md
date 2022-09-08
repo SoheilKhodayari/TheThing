@@ -181,7 +181,7 @@ If you use the TheThing for academic research, we encourage you to cite the foll
 @inproceedings {SKhodayariSP23TheThing,
   author = {Soheil Khodayari and Giancarlo Pellegrino},
   title = {It's (DOM) Clobbering Time: Attack Techniques, Prevalence, and Defenses,
-  booktitle = {To Appear at proceedings of the 44rd IEEE Symposium on Security and Privacy},
+  booktitle = {To Appear at proceedings of the 44th IEEE Symposium on Security and Privacy},
   year = {2023},
 }
 ```
