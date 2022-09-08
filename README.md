@@ -175,7 +175,7 @@ Please refer to the complete documentation in [docs](https://github.com/SoheilKh
 
 ## 📝 Academic Publication
 
-If you use the TheThing for academic research, we encourage you to cite the following [paper](#coming-soon):
+If you use the TheThing for academic research, we encourage you to cite the following [paper](https://soheilkhodayari.github.io/papers/sp23_domclob.pdf):
 
 ```
 @inproceedings {SKhodayariSP23TheThing,
