@@ -102,7 +102,7 @@ Alternatively, do:
 ```bash
 $ git clone https://github.com/SoheilKhodayari/TheThing
 $ cd TheThing
-$ git clone https://github.com/SoheilKhodayari/JAW --branch v2.0.1  
+$ git clone https://github.com/SoheilKhodayari/JAW --branch v2.0.2  
 ```
 
 Then, copy the JAW's content into the root directory:
