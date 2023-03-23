@@ -110,7 +110,7 @@ passes:
 Then, in the root directory run:
 
 ```bash
-$ python3 -m run_domclobbering --conf=config.yaml'
+$ python3 -m run_domclobbering --conf=config.yaml
 ```
 
 
