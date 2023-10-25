@@ -19,7 +19,7 @@
 # TheThing
 
 
-[![Build Status](https://travis-ci.org/boennemann/badges.svg?branch=master)](https://travis-ci.org/boennemann/badges) [![Node](https://img.shields.io/badge/node%40latest-%3E%3D%206.0.0-brightgreen.svg)](https://img.shields.io/badge/node%40latest-%3E%3D%206.0.0-brightgreen.svg) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![Open Source?Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Find%20DOM%20Clobbering%20vulnerabilities%20with%20TheThing&url=https://github.com/SoheilKhodayari/TheThing)
+[![Node](https://img.shields.io/badge/node%40latest-%3E%3D%206.0.0-brightgreen.svg)](https://img.shields.io/badge/node%40latest-%3E%3D%206.0.0-brightgreen.svg) [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![Open Source?Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Find%20DOM%20Clobbering%20vulnerabilities%20with%20TheThing&url=https://github.com/SoheilKhodayari/TheThing)
 
 
 A static-dynamic security analysis tool for [DOM clobbering](https://portswigger.net/web-security/dom-based/dom-clobbering) vulnerabilities based on [JAW-v1](https://github.com/SoheilKhodayari/JAW/releases/tag/v1.1.5) and [Iroh](https://github.com/maierfelix/Iroh). TheThing can be used for analyzing the client-side of web applications.
