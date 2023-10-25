@@ -31,9 +31,6 @@ This project is available as open source under the terms of the `GNU AFFERO GENE
 TheThing has a website available at [https://soheilkhodayari.github.io/DOMClobbering](https://soheilkhodayari.github.io/DOMClobbering). 
 
 
-<details>
-<summary>📓 <b>Content</b></summary>
-
 ## Table of Contents
 
 - [DOM Clobbering](#-dom-clobbering)
@@ -56,9 +53,6 @@ TheThing has a website available at [https://soheilkhodayari.github.io/DOMClobbe
 	- [Dynamic Analysis](https://github.com/SoheilKhodayari/TheThing/tree/master/docs/thething.md#dynamic-analyzer)
 - [Contribution and Code of Conduct](#-contribution-and-code-of-conduct)
 - [Academic Publication](#-academic-publication)
-
-</details>
-
 
 
 ## ✨ What is DOM Clobbering? 
